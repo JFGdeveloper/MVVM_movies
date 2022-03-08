@@ -1,4 +1,4 @@
-package com.javidev.mvvm_movies_compose.dataLayer.constant
+package com.javidev.mvvm_movies_compose.dataLayer.common
 
 class Constants {
     companion object{
