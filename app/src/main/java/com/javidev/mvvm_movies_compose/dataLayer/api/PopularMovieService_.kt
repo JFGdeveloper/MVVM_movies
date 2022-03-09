@@ -1,6 +1,6 @@
 package com.javidev.mvvm_movies_compose.dataLayer.api
 
-import com.javidev.mvvm_movies_compose.dataLayer.common.response.PopularMovieResponse
+import com.javidev.mvvm_movies_compose.dataLayer.api.response.PopularMovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

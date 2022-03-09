@@ -1,4 +1,4 @@
-package com.javidev.mvvm_movies_compose.dataLayer.common.response
+package com.javidev.mvvm_movies_compose.dataLayer.api.response
 
 data class Movie(
     val adult: Boolean,
