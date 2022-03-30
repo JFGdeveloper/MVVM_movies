@@ -57,11 +57,14 @@ private fun muestraLog(viewmodel: HomeViewModel) {
 @Composable
 fun Greeting(name: String,viewmodel: HomeViewModel) {
 
+    val movies = viewmodel.getPopularMovies()
+    // println(movies.message() ?: "es nulo el value de moviessssssssssssss")
+
     Column(modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = "Hello $name!")
-        Text(text = "Hello ${viewmodel.popularMovies.value}!")
+        Text(text = "Hello ${movies[0] }")
         Text(text = "Hello $name!")
         Text(text = "Hello $name!")
     }
