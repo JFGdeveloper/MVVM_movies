@@ -7,40 +7,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.javidev.mvvm_movies_compose.dataLayer.api.response.Movie
 import com.javidev.mvvm_movies_compose.dataLayer.api.response.PopularMoviesResponse
-import com.javidev.mvvm_movies_compose.dataLayer.repository.MovieDbRepository
-import kotlinx.coroutines.Dispatchers
+import com.javidev.mvvm_movies_compose.dataLayer.common.MyApp
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class HomeViewModel: ViewModel() {
-    // REPOSITORY
-    private val movieDbRepository = MovieDbRepository()
+class HomeViewModel : ViewModel() {
+    // REPOSITORY creando una instancia de mi singleton
+    private val movieDbRepository = MyApp.networkContainer.popularMoviService
 
     // LLAMADA A LA API////////
+
     private var _popularMovies = MutableLiveData<Response<PopularMoviesResponse>>()
-    var popularMovies: LiveData<Response<PopularMoviesResponse>> = _popularMovies
+    var movies: LiveData<Response<PopularMoviesResponse>> = _popularMovies
+
 
     // FORMA NUEVA DE COMPOSE///////
-    var popularMoviesState = mutableStateListOf<Response<PopularMoviesResponse>>()
-    private set
+    var moviesState = mutableStateListOf<Movie>()
+        private set
+
+
 
     init {
-        getPopularMovies()
-
-        println("////////valor de popularmovies: ${popularMovies.value}")
-        println("////////valor de popularmoviesState: ${popularMoviesState[0].body()!!.results[0]}")
+        addMovies()
     }
 
-    @JvmName("getPopularMovies1")
-    fun getPopularMovies(): SnapshotStateList<Response<PopularMoviesResponse>> {
-        viewModelScope.launch(Dispatchers.IO) {
-            //_popularMovies.postValue( movieDbRepository.getPopularMovie())
-            val populars: Response<PopularMoviesResponse> = movieDbRepository.getPopularMovies()
-            popularMoviesState.add(populars)
-        }
+    fun addMovies() = viewModelScope.launch {
+        val populars = movieDbRepository.getPopularMovieService().body()?.results
+        moviesState.addAll(populars!!)
+    }
 
-        return popularMoviesState
+
+    fun getPopularMovies(): List<Movie> {
+        val movies: SnapshotStateList<Movie> = moviesState
+        return movies
     }
 
 

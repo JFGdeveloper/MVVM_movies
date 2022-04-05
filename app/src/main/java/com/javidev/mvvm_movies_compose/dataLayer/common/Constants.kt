@@ -3,7 +3,7 @@ package com.javidev.mvvm_movies_compose.dataLayer.common
 class Constants {
     companion object{
         const val API_BASE_URL= "https://api.themoviedb.org/3/"
-        const val IMAGE_BASE_URL= ""
+        const val IMAGE_BASE_URL= "https://image.tmdb.org/t/p/w500/"
         const val API_KEY= "79cf6a9b489c5d3a7ecf962123007f66"
 
         // parametros de la query
@@ -11,3 +11,5 @@ class Constants {
         const val URL_PARAM_LANGUAGE = "language"
     }
 }
+
+// para la imagen añade posterpaht
