@@ -14,10 +14,6 @@ fun HomeScreen(viewModel: HomeViewModel) {
     MyScaffold(
        content = { ListaMovies(movies = movies) }
     )
-
-
-
-
 }
 
 

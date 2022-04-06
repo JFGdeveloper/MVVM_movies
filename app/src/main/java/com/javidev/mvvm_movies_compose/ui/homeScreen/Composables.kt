@@ -1,10 +1,7 @@
 package com.javidev.mvvm_movies_compose.ui.homeScreen
 
 import android.view.RoundedCorner
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -12,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -43,31 +42,75 @@ fun ListaMovies(movies: List<Movie>) {
 
 @Composable
 fun ItemMovie(movie: Movie) {
+
+    Card(
+        modifier = Modifier.padding(5.dp),
+        shape = RoundedCornerShape(10),
+        border = BorderStroke(1.dp, MaterialTheme.colors.primary)
+    ) {
+        Column {
+            ImagenPuntuacion(movie)//box
+
+            FechaDescription(movie)
+        }/// colum
+    }
+}
+
+@Composable
+private fun ImagenPuntuacion(movie: Movie) {
     Box(
         contentAlignment = Alignment.BottomEnd
     ) {
         AsyncImage(
             modifier = Modifier
                 .size(200.dp)
-                .padding(8.dp)
                 .clip(RoundedCornerShape(10.dp)),
             model = Constants.IMAGE_BASE_URL + movie.poster_path,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-
-
         )
 
-        Box(modifier = Modifier
-            .size(50.dp)
-            .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp, bottomStart = 25.dp, bottomEnd = 5.dp))
-            .background(Color.Magenta),
-            contentAlignment = Alignment.Center)
-        {
-            Text(text = movie.vote_average.toString())
+        Puntuacion(movie)
+    }
+}
+
+@Composable
+private fun FechaDescription(movie: Movie) {
+    Box(
+        modifier =
+        Modifier
+            .size(width = 200.dp, height = 90.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Text(text = movie.release_date)
+            Text(text = movie.overview, overflow = TextOverflow.Clip)
         }
+    }
+}
 
-
+@Composable
+private fun Puntuacion(movie: Movie) {
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .clip(
+                RoundedCornerShape(
+                    topStart = 20.dp,
+                    topEnd = 20.dp,
+                    bottomStart = 20.dp,
+                    bottomEnd = 5.dp
+                )
+            )
+            .background(Color.Magenta),
+        contentAlignment = Alignment.Center
+    )
+    {
+        Text(text = movie.vote_average.toString())
     }
 }
 
