@@ -4,6 +4,7 @@ import android.view.RoundedCorner
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,17 +44,29 @@ fun ListaMovies(movies: List<Movie>) {
 @Composable
 fun ItemMovie(movie: Movie) {
     Box(
+        contentAlignment = Alignment.BottomEnd
     ) {
         AsyncImage(
             modifier = Modifier
-                .clip(RoundedCornerShape(50.dp))
                 .size(200.dp)
-                .padding(8.dp),
+                .padding(8.dp)
+                .clip(RoundedCornerShape(10.dp)),
             model = Constants.IMAGE_BASE_URL + movie.poster_path,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
 
-            )
+
+        )
+
+        Box(modifier = Modifier
+            .size(50.dp)
+            .clip(RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp, bottomStart = 25.dp, bottomEnd = 5.dp))
+            .background(Color.Magenta),
+            contentAlignment = Alignment.Center)
+        {
+            Text(text = movie.vote_average.toString())
+        }
+
 
     }
 }
